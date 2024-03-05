@@ -57,6 +57,7 @@ export default class Words extends PureComponent {
         })
           .then(response => {
             if (response.data.explanation) {
+              response.data.explanation = this.cleanExplanation(response.data.explanation);
               this.changeDef(word, response.data.explanation);
             }
           })
@@ -76,6 +77,10 @@ export default class Words extends PureComponent {
     if (pendingRequests === 0) {
       this.setState({ isFetchingExplanations: false });
     }
+  }
+
+  cleanExplanation(explanation) {
+    return explanation.replace(/[\r\n]+/g, ' ').trim(); // Example: removing new lines and trimming.
   }
 
   exportDeck(exportType) {
