@@ -32,6 +32,7 @@ The Vocabulary Builder on Kindle devices is a powerful feature for language lear
         ```
         ollama serve
         ```
+   - If you want a version that doesn't require the ollama, please check the tag [backend-orca-ai-with-no-ollama](https://github.com/gustavostz/fluentcards-ai/tree/backend-orca-ai-with-no-ollama)
 
 4. **Running the Frontend:**
    - Ensure you have Node.js (version 14) and npm or Yarn installed.
