@@ -7,7 +7,7 @@ Collect flashcards from your Kindle and generate AI-powered explanations for Ank
 
 ## How It Works
 
-The Vocabulary Builder on Kindle devices is a powerful feature for language learners. It collects all the words you look up, including their definition and context. This project takes your Kindle vocabulary and uses an AI language model (LLM) to generate detailed explanations based on the word and its context. These explanations are then ready to be imported into Anki for spaced repetition learning.
+The Vocabulary Builder on Kindle devices is a powerful feature for language learners. It collects all the words you look up, including their definition and context. This project takes your Kindle vocabulary and uses an AI language model (LLM) hosted by Ollama to generate detailed explanations based on the word and its context. These explanations are then ready to be imported into Anki for spaced repetition learning.
 
 ### Key Features
 
@@ -26,30 +26,23 @@ The Vocabulary Builder on Kindle devices is a powerful feature for language lear
    - Connect your Kindle to your computer and locate the `vocab.db` file.
    - Copy the `vocab.db` file to your computer.
 
-3. **Running the AI Explanations Generator:**
-   - Ensure you have Python 3.8+ installed.
-   - Install the required dependencies for the backend.
-   - Start the FastAPI server to run the LLM locally.
-   - If your system does not have a powerful GPU, you can modify the code to run the LLM using only the CPU.
+3. **Installing and Running Ollama Locally:**
+   - Download and install Ollama from [ollama.com/download](https://ollama.com/download).
+   - Run Ollama locally on the default port (http://localhost:11434):
+        ```
+        ollama serve
+        ```
 
 4. **Running the Frontend:**
-   - Ensure you have Node.js and npm or Yarn installed.
+   - Ensure you have Node.js (version 14) and npm or Yarn installed.
    - Install the dependencies and start the React app.
-   - Upload your `vocab.db` file and fetch AI-generated explanations.
+   - Upload your `vocab.db` file and click on fetch AI-generated explanations.
 
 5. **Exporting for Anki:**
    - Once the explanations are fetched, you can export the deck in Anki format.
    - Import the deck into Anki, ensuring that "Allow HTML in fields" is ticked.
 
 ### Installation and Setup
-
-#### Backend (FastAPI):
-
-```bash
-cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
 
 #### Frontend (React):
 
@@ -61,6 +54,12 @@ npm start
 yarn install
 yarn start
 ```
+
+#### Change AI model (optional)
+
+Currently, the project is configured to use the llama model. If you want to use a different model, you can change the model in the `\frontend\src\vocab\components\Words\Words.jsx` file.
+
+```model: "llama3"```
 
 ### Credits
 
