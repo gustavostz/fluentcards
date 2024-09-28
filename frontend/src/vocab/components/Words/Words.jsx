@@ -187,7 +187,6 @@ export default class Words extends PureComponent {
 
   parseExplanation(responseText) {
     try {
-      // Attempt to extract JSON object from the response
       const jsonStart = responseText.indexOf('{');
       const jsonEnd = responseText.lastIndexOf('}') + 1;
 
