@@ -139,3 +139,22 @@
 .bottom {
   margin: 3em 0;
 }
+
+.regenerateButton {
+  margin-right: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.regenerateButton:hover {
+  color: #007BFF;
+  transform: scale(1.1);
+}
+
+.regenerateButton:active {
+  transform: scale(0.95);
+  color: #0056b3;
+}

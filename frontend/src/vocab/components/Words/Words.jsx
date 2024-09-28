@@ -12,36 +12,15 @@ import styles from './Words.css';
 import axios from 'axios';
 
 /**
- * Words component
+ * Instructions for AI explanations
  */
-export default class Words extends PureComponent {
-  constructor() {
-    super();
+const instructions = `Role and Goal: As 'Anki English Explanations', I am specialized in providing clear, insightful explanations of English words in specific contexts. My primary function is to enhance the user's understanding of English vocabulary. For each word, I offer two types of explanations: a 'Direct Explanation' for a detailed, educational understanding, and a 'Simple Analogy' for an easy, relatable comprehension, and the 'Etymology' to increase the users’ knowledge about this type of vocabulary helping to guess words with similar etymological roots.
 
-    this.state = {
-      deck: null,
-      exportType: null,
-      isReversed: false,
-      isFetchingExplanations: false,
-    };
-
-    this._toggleReverse = () => this.setState({ isReversed: !this.state.isReversed });
-  }
-
-  fetchAIExplanations() {
-    if (!this.state.deck || this.state.isFetchingExplanations) {
-      return;
-    }
-
-    this.setState({ isFetchingExplanations: true });
-    const apiUrl = 'http://localhost:11434/api/generate'
-    const instructions = `Role and Goal: As 'Anki English Explanations', I am specialized in providing clear, insightful explanations of English words in specific contexts. My primary function is to enhance the user's understanding of English vocabulary. For each word, I offer two types of explanations: a 'Direct Explanation' for a detailed, educational understanding, and a 'Simple Analogy' for an easy, relatable comprehension, and the 'Etymology' to increase the users’ knowledge about this type of vocabulary helping to guess words with similar etymological roots.
-
-Constraints: I avoid redundancy by not repeating the user-provided context. My focus is on delivering concise, accurate explanations. 
+Constraints: I avoid redundancy by not repeating the user-provided context. My focus is on delivering concise, accurate explanations.
 
 Guidelines: I maintain a didactic approach, ensuring that each explanation is tailored to different learning styles. The 'Direct Explanation' is concise and comprehensive, whereas the 'Simple Analogy' is informal and illustrative, on the other hand the 'Etymology' is focused on tracing the word’s origin, linking it to common roots or prefixes/suffixes, showing connections to related terms to help users recognize patterns across the language.
 
-Clarification: I rely on the context given, making assumptions if necessary, to provide relevant explanations without needing further clarification. 
+Clarification: I rely on the context given, making assumptions if necessary, to provide relevant explanations without needing further clarification.
 
 Personalization: My responses are crafted to be informative yet approachable, aiming to aid in language learning and enhancing vocabulary understanding.
 
@@ -97,8 +76,30 @@ Think of someone who always ties their shoes a certain way—it's a small, perso
 <br/>
 From Greek <i>idios</i> (personal) and <i>synkrasis</i> (mixture), meaning a unique trait or habit of an individual.
 
-Obs:  I don't need to repeat the phrase received, please just send the word and the explanation of it in the format "Direct Explanation", "Simple Analogy", and the "Etymology" with the style that I outlined (use bold for titles and key explanation parts, always separate sections with two line breaks, and apply italic for etymological roots or foreign words).
-`
+Obs:  I don't need to repeat the phrase received (nor say "here's my response", send the response directly!), please just send explanations of it in the format "Direct Explanation", "Simple Analogy", and the "Etymology" with the style that I outlined (use bold tags for titles and key explanation parts, always separate titles and sections with two line breaks tags, and apply italic tag for etymological roots words).
+`;
+
+export default class Words extends PureComponent {
+  constructor() {
+    super();
+
+    this.state = {
+      deck: null,
+      exportType: null,
+      isReversed: false,
+      isFetchingExplanations: false,
+    };
+
+    this._toggleReverse = () => this.setState({ isReversed: !this.state.isReversed });
+  }
+
+  fetchAIExplanations() {
+    if (!this.state.deck || this.state.isFetchingExplanations) {
+      return;
+    }
+
+    this.setState({ isFetchingExplanations: true });
+    const apiUrl = 'http://localhost:11434/api/generate';
 
     let pendingRequests = 0;
 
@@ -137,8 +138,37 @@ Obs:  I don't need to repeat the phrase received, please just send the word and 
     }
   }
 
+  regenerateExplanation(item) {
+    if (item.selection && item.context) {
+      this.setState({ isFetchingExplanations: true });
+      const apiUrl = 'http://localhost:11434/api/generate';
+
+      axios.post(apiUrl, {
+        model: "llama3",
+        prompt: instructions + `\n${ item.selection }: "${ item.context }"`,
+        stream: false
+      }, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(response => {
+          if (response.data && response.data.response) {
+            const explanation = this.cleanExplanation(response.data.response);
+            this.changeDef(item, explanation);
+          }
+        })
+        .catch(error => {
+          console.error('Error fetching explanation:', error);
+        })
+        .finally(() => {
+          this.setState({ isFetchingExplanations: false });
+        });
+    }
+  }
+
   cleanExplanation(explanation) {
-    return explanation.replace(/[\r\n]+/g, ' ').trim(); // Example: removing new lines and trimming.
+    return explanation.trim(); // Adjust as needed to clean the explanation.
   }
 
   exportDeck(exportType) {
@@ -160,11 +190,12 @@ Obs:  I don't need to repeat the phrase received, please just send the word and 
 
   changeDef(item, value) {
     VocabStore.updateItem(this.props.id, item, { def: [
-      {
-        text: item.selection,
-        tr: value.split('; ').map(text => ({ text }))
-      }
-    ] });
+        {
+          text: item.selection,
+          tr: value.split('; ').map(text => ({ text }))
+        }
+      ]
+    });
   }
 
   changeContext(item, value) {
@@ -239,6 +270,7 @@ Obs:  I don't need to repeat the phrase received, please just send the word and 
       return (
         <div className={ styles.entry } key={ index }>
           <div className={ classnames(styles.col, styles.count) }>
+            <button className={ styles.regenerateButton } onClick={ () => this.regenerateExplanation(item) }>🔄</button>
             { index + 1 }
           </div>
 
