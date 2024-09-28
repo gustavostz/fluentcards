@@ -54,17 +54,22 @@ fawning: "I put on the air of a fawning young lad."
 I would answer:
 
 """
-Direct Explanation:
-
-To be "fawning" means to be overly flattering, excessively praising, or showing affection or admiration to an excessive degree. In this context, the person is pretending or acting like a young lad who is overly eager to please and impress, possibly in a subservient or ingratiating manner.
-
-Simple Analogy:
-
+<b>Direct Explanation:</b>
+<br/>
+<br/>
+To be "fawning" means to be <b>overly flattering</b>, excessively praising, or showing affection or admiration to an excessive degree. In this context, the person is pretending or acting like a young lad who is overly eager to please and impress, possibly in a subservient or ingratiating manner.
+<br/>
+<br/>
+<b>Simple Analogy:</b>
+<br/>
+<br/>
 Imagine a puppy that follows someone around, wagging its tail, and trying to get attention or treats. It’s overly eager and tries hard to please. This is similar to the behavior being described as "fawning."
-
-Etymology:
-
-Comes from Old English _fagnian_, meaning "to rejoice" or "show pleasure," which evolved into showing exaggerated affection or flattery to gain favor.
+<br/>
+<br/>
+<b>Etymology:</b>
+<br/>
+<br/>
+Comes from Old English <i>fagnian</i>, meaning "to rejoice" or "show pleasure," which evolved into showing exaggerated affection or flattery to gain favor.
 """
 
 Remember to be didactical. I prefer the method of having three separated explanations, one being the Direct Explanation, the other being the Simple Analogy, and the last being the Etymology. So if I don't understand one I can read the other.
@@ -75,21 +80,24 @@ For example the meaning of idiosyncrasy in this context:
 
 Could be:
 
-Direct Explanation:
-
-An "idiosyncrasy" is a unique or unusual habit specific to a person. Carla’s insistence on sitting in the same chair is an example of her personal quirk.
-
-
-Simple Analogy:
-
+<b>Direct Explanation:</b>
+<br/>
+<br/>
+An "idiosyncrasy" is a unique or <b>unusual habit specific to a person</b>. Carla’s insistence on sitting in the same chair is an example of her personal quirk.
+<br/>
+<br/>
+<b>Simple Analogy:</b>
+<br/>
+<br/>
 Think of someone who always ties their shoes a certain way—it's a small, personal habit that makes them different. That's an idiosyncrasy.
+<br/>
+<br/>
+<b>Etymology:</b>
+<br/>
+<br/>
+From Greek <i>idios</i> (personal) and <i>synkrasis</i> (mixture), meaning a unique trait or habit of an individual.
 
-
-Etymology:
-
-From Greek _idios_ (personal) and _synkrasis_ (mixture), meaning a unique trait or habit of an individual.
-
-Obs:  I don't need to repeat the phrase received, please just send the word and the explanation of it in the format "Direct Explanation", "Simple Analogy", and the "Etymology".
+Obs:  I don't need to repeat the phrase received, please just send the word and the explanation of it in the format "Direct Explanation", "Simple Analogy", and the "Etymology" with the style that I outlined (use bold for titles and key explanation parts, always separate sections with two line breaks, and apply italic for etymological roots or foreign words).
 `
 
     let pendingRequests = 0;
